@@ -1,0 +1,18 @@
+.well
+  = form_tag @component.relation_path(resource, :translation, action: :edit) do
+    = label :target_locale, t('i18n_admin.translations.choose_locale')
+    = select_tag :target_locale, options_for_select(@locales.map { |locale| [locale, locale] }, @target_locale)
+
+= para_form_for(resource, url: @component.relation_path(resource, :translation)) do |form|
+  = form.fieldset do
+    - translated_model_fields_for(resource.class).each do |field|
+      = form.send(field.field_method, field.field_name) do
+        .row
+          .col-md-6
+            - I18n.with_locale(I18n.default_locale) do
+              = field.value_for(resource)
+          .col-md-6
+            - I18n.with_locale(@target_locale) do
+              = form.input_field field.field_name, field.field_options.merge(class: 'form-control')
+
+  = form.actions(except: :submit_and_add_another)
