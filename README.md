@@ -70,7 +70,7 @@ way :
 rails g para:i18n:form page
 ```
 
-This will create a partial at `app/views/admin/pages/_translatins_form.html.haml`
+This will create a partial at `app/views/admin/pages/_translations_form.html.haml`
 that you can override.
 
 ## Contributing
