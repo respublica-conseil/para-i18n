@@ -57,7 +57,7 @@ end
 Now, any `crud` component managing the `Page` model will show a button to access
 the translation interface for existing entries.
 
-## Overriding the translations form
+### Overriding the translations form
 
 The translation form can be overriden by generating it with the `para:i18n:form`
 generator. This is useful to delete or add fields to translate that are not
@@ -72,6 +72,34 @@ rails g para:i18n:form page
 
 This will create a partial at `app/views/admin/pages/_translations_form.html.haml`
 that you can override.
+
+### Locales fallbacks support
+
+The gem fully supports Rails' I18n fallbacks and will try to fallback to any
+available translation using the `I18n.fallbacks` hash if you enable them.
+
+If not enabled, any untranslated content will be empty.
+
+### Friendly id support
+
+The gem comes with friendly_id i18n support, with a dedicated `:i18n` module to
+include instead of the `:slugged` module into your models friendly_id options.
+
+For example, for the page :
+
+```ruby
+class Page < ActiveRecord::Base
+  translates :title, :slug
+
+  friendly_id :title, use: [:i18n, :finders]
+end
+```
+
+This will automatically build localized slugs when updating the `title` in any
+locale, and will allow you to find the resources with the translated slugs.
+
+Note that if I18n fallbacks are enabled, it will try to fall back to the next
+locale if no resource was found for the given slug and locale.
 
 ## Contributing
 
