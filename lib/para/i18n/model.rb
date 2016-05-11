@@ -4,7 +4,7 @@ module Para
       extend ActiveSupport::Concern
 
       included do
-        class_attribute :translated_fields
+        class_attribute :translated_attribute_names
       end
 
       def read_translated_attribute(field, locale = ::I18n.locale)
@@ -45,7 +45,7 @@ module Para
 
       module ClassMethods
         def translates(*fields)
-          self.translated_fields = fields.map(&:to_sym)
+          self.translated_attribute_names = fields.map(&:to_sym)
 
           fields.each do |field|
             define_method field do
@@ -58,8 +58,8 @@ module Para
           end
         end
 
-        def translatable?
-          translated_fields.length > 0
+        def translates?
+          translated_attribute_names && translated_attribute_names.length > 0
         end
       end
     end

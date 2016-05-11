@@ -10,7 +10,7 @@ module Para
       end
 
       def translate_button(resource)
-        return unless resource.class.translatable?
+        return unless resource.class.translates?
 
         path = component.relation_path(resource, :translation, action: :edit)
         options = { class: 'btn btn-info' }
