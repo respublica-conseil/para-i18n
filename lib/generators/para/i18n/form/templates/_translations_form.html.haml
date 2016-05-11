@@ -1,6 +1,8 @@
 = para_form_for(resource, url: @component.relation_path(resource, :translation)) do |form|
   = form.fieldset do
-    - translated_model_fields_for(resource.class).each do |field|
-      = form.input field.field_name, as: :i18n, locale: @target_locale
+  <%- translated_attributes.each do |field| -%>
+    = form.input :<%= field.field_name %>, as: :i18n, locale: @target_locale
+  <%- end -%>
 
   = form.actions(except: :submit_and_add_another)
+

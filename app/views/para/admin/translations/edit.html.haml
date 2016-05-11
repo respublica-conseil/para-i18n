@@ -1,6 +1,9 @@
-.page-title
-  %h1
-    = resource_title_for(resource)
+= page_top_bar(title: resource_title_for(resource), type: 'crud/edit')
 
 .page-content-wrap
+  .well
+    = form_tag @component.relation_path(resource, :translation, action: :edit), method: :get do
+      = label :target_locale, t('i18n_admin.translations.choose_locale')
+      = select_tag :target_locale, options_for_select(@locales.map { |locale| [locale, locale] }, @target_locale), data: { :'locale-select' => true }
+
   = render find_partial_for(resource, :translations_form)

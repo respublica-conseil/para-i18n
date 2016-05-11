@@ -8,6 +8,8 @@ require 'para/i18n/translations_helper'
 
 require 'para/i18n/friendly_id'
 
+require 'para/i18n/i18n_input'
+
 require 'para/i18n/engine'
 
 module Para
