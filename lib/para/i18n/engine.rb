@@ -11,6 +11,10 @@ module Para
         ::Para.config.routes.extend_routes_for(:crud_component) do
           resource :translation, only: [:edit, :update]
         end
+
+        ::Para.config.routes.extend_routes_for(:singleton_resource_component) do
+          resource :translation, only: [:edit, :update]
+        end
       end
 
       initializer 'para.i18n.include_view_helpers' do
@@ -26,7 +30,7 @@ module Para
       end
 
       initializer 'para.i18n.add_translate_actions' do
-        Para.config.add_actions_for('crud/edit') do
+        Para.config.add_actions_for('crud/edit', 'singleton_resource/show') do
           {
             icon: 'globe',
             label: ::I18n.t('para.i18n.translate'),
