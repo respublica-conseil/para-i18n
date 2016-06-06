@@ -44,7 +44,7 @@ module Para
       end
 
       def add_breadcrumbs
-        add_breadcrumb(resource_title_for(resource)) if resource
+        add_breadcrumb(resource_title_for(resource), @component.relation_path(resource, action: :edit)) if resource
         add_breadcrumb(t('para.i18n.translation'))
       end
     end
