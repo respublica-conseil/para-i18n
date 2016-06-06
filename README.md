@@ -73,6 +73,50 @@ rails g para:i18n:form page
 This will create a partial at `app/views/admin/pages/_translations_form.html.haml`
 that you can override.
 
+### Translation fields customization
+
+This gem uses a special [Simple Form](https://github.com/plataformatec/simple_form)
+input to manage translations.
+
+Example :
+
+```ruby
+= form.input :title, as: :i18n, locale: @target_locale
+```
+
+When generating the translations form, you can edit those inputs, remove or add
+some inputs.
+
+#### Managing nested resources
+
+You can simply manage nested resources by using the `simple_fields_for` form
+helper :
+
+```ruby
+= form.simple_fields_for :nested_resources do |fields|
+  = fields.input :nested_title, as: :i18n, locale: @target_locale
+```
+
+#### Passing options to the translation field
+
+The I18n field generates a plain HTML section with the original contents of the
+field (in the `I18n.default_locale` locale), and a sub-input, which uses the
+default type that Para infers from the attribute.
+
+You can override the generated field type or pass other options by using the
+`:input_html` option :
+
+```ruby
+= form.input :value, as: :i18n, locale: @target_locale, input_html: { as: :numeric, spinner: false }
+```
+
+Also, if your original content contains useful HTML, you can use the `:html_safe`
+to be applied to the original content by using the `:original_html` option :
+
+```ruby
+= form.input :value, as: :i18n, locale: @target_locale, original_html: { html_safe: true }
+```
+
 ### Locales fallbacks support
 
 The gem fully supports Rails' I18n fallbacks and will try to fallback to any
