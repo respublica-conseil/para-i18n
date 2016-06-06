@@ -1,4 +1,4 @@
-class Translate<%= plural_class_name %> < ActiveRecord::Migration
+class Translate<%= table_name.camelize %> < ActiveRecord::Migration
   def change
     add_column :<%= table_name %>, :_translations, :jsonb
   end

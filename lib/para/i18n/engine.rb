@@ -9,11 +9,11 @@ module Para
 
       initializer 'para.i18n.extend_para_routes' do
         ::Para.config.routes.extend_routes_for(:crud_component) do
-          resource :translation, only: [:edit, :update]
+          resource :translation, only: [:edit, :update], controller: '/para/admin/translations'
         end
 
         ::Para.config.routes.extend_routes_for(:singleton_resource_component) do
-          resource :translation, only: [:edit, :update]
+          resource :translation, only: [:edit, :update], controller: '/para/admin/translations'
         end
       end
 
