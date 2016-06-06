@@ -35,7 +35,7 @@ module Para
             icon: 'globe',
             label: ::I18n.t('para.i18n.translate'),
             url: @component.relation_path(resource, :translation, action: :edit)
-          }
+          } if resource.class.translates?
         end
       end
     end
