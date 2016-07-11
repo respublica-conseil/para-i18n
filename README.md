@@ -135,9 +135,13 @@ For example, for the page :
 class Page < ActiveRecord::Base
   translates :title, :slug
 
-  friendly_id :title, use: [:i18n, :finders]
+  friendly_id :title, use: [:finders, :i18n]
 end
 ```
+
+> **Warning** : You always need to put the `:i18n` fiendly_id module after all
+other modules, so the finder methods included in this module take the current
+locale into account.
 
 This will automatically build localized slugs when updating the `title` in any
 locale, and will allow you to find the resources with the translated slugs.
