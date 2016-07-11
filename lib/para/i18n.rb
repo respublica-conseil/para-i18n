@@ -15,5 +15,8 @@ require 'para/i18n/engine'
 module Para
   module I18n
     # Your code goes here...
+    def self.method_missing(method, *args, &block)
+      ::I18n.send(method, *args, &block)
+    end
   end
 end
