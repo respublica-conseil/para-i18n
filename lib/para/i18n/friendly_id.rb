@@ -9,6 +9,15 @@ module FriendlyId
 
       def included(model_class)
         model_class.extend(ClassMethods)
+
+        # Support for friendly finds on associations for Rails 4.0.1 and above.
+        #
+        # Borrowed from FriendlyId::Finders module
+        #
+        if ::ActiveRecord.const_defined?('AssociationRelation')
+          association_relation_delegate_class = model_class.relation_delegate_class(::ActiveRecord::AssociationRelation)
+          association_relation_delegate_class.send(:include, ClassMethods)
+        end
       end
     end
 
