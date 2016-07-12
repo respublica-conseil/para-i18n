@@ -40,7 +40,7 @@ module Para
       end
 
       def translation_for(locale)
-        model_translations[locale] || {}
+        model_translations[locale.to_s] || {}
       end
 
       private
