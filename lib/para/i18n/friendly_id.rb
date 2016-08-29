@@ -40,21 +40,25 @@ module FriendlyId
     end
 
     module ClassMethods
-      def exists_by_friendly_id?(id)
-        if (exists = by_friendly_id(id).exists?)
+      def exists_by_friendly_id?(id, locale = ::I18n.locale)
+        if (exists = by_friendly_id(id, locale).exists?)
           exists
-        elsif (fallback_locale = Para::I18n::Fallbacks.i18n_fallback_for(::I18n.locale))
-          by_friendly_id(id, fallback_locale).exists?
+        elsif (fallback_locale = Para::I18n::Fallbacks.i18n_fallback_for(locale)) &&
+          fallback_locale != locale
+        then
+          exists_by_friendly_id?(id, fallback_locale)
         end
       end
 
       private
 
-      def first_by_friendly_id(id)
-        if (first = by_friendly_id(id).first)
+      def first_by_friendly_id(id, locale = ::I18n.locale)
+        if (first = by_friendly_id(id, locale).first)
           first
-        elsif (fallback_locale = Para::I18n::Fallbacks.i18n_fallback_for(::I18n.locale))
-          by_friendly_id(id, fallback_locale).first
+        elsif (fallback_locale = Para::I18n::Fallbacks.i18n_fallback_for(locale)) &&
+          fallback_locale != locale
+        then
+          first_by_friendly_id(id, fallback_locale)
         end
       end
 
@@ -62,7 +66,7 @@ module FriendlyId
         if locale == ::I18n.default_locale
           where(friendly_id_config.query_field => id)
         else
-          json_path = "{#{ ::I18n.locale },#{ friendly_id_config.query_field }}"
+          json_path = "{#{ locale },#{ friendly_id_config.query_field }}"
           where("_translations#>>'#{ json_path }' = ?", id)
         end
       end
