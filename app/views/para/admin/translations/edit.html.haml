@@ -1,9 +1,11 @@
-= page_top_bar(title: resource_title_for(resource), type: 'crud/edit')
+= page_top_bar(title: resource_title_for(resource), type: 'crud/translate')
 
 .page-content-wrap
-  .well
-    = form_tag @component.relation_path(resource, :translation, action: :edit), method: :get do
-      = label :target_locale, t('i18n_admin.translations.choose_locale')
-      = select_tag :target_locale, options_for_select(@locales.map { |locale| [locale, locale] }, @target_locale), data: { :'locale-select' => true }
+  = form_tag @component.relation_path(resource, :translation, action: :edit), method: :get, class: 'form-horizontal form-group-separated' do
+    .block.form-inputs
+      .form-group
+        = label :target_locale, t('i18n_admin.translations.choose_locale'), class: 'control-label col-md-3 pull-left'
+        .col-md-9
+          = select_tag :target_locale, options_for_select(@locales.map { |locale| [locale, locale] }, @target_locale), data: { :'locale-select' => true, selectize: true, multi: false, value: { text: @target_locale, value: @target_locale } }
 
   = render find_partial_for(resource, :translations_form)
