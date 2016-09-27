@@ -1,3 +1,5 @@
+require 'para'
+
 require 'para/i18n/version'
 
 require 'para/i18n/fallbacks'
