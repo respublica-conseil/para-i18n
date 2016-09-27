@@ -149,6 +149,12 @@ locale, and will allow you to find the resources with the translated slugs.
 Note that if I18n fallbacks are enabled, it will try to fall back to the next
 locale if no resource was found for the given slug and locale.
 
+## Migrating from Globalize
+
+There's a dedicated section in the Wiki that can help your migrate your app grom Globalize to Para::I18n.
+
+You can find this guide here : [Migrating from Globalize](https://github.com/para-cms/para-i18n/wiki/Migrating-from-Globalize)
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/para-cms/para-i18n.
