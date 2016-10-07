@@ -19,7 +19,8 @@ module Para
 
       initializer 'para.i18n.include_view_helpers' do
         ActiveSupport.on_load(:action_view) do
-          include Para::I18n::TranslationsHelper
+          include Para::I18n::Helpers::TranslationsHelper
+          include Para::I18n::Helpers::TranslationsFormHelper
         end
       end
 
