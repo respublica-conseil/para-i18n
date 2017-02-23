@@ -11,8 +11,10 @@ module Para
       def render
         content_tag(:div, class: 'row') do
           content_tag(:div, class: 'col-md-6') do
-            ::I18n.with_locale(::I18n.default_locale) do
-              original_content
+            content_tag(:div, class: 'text-disabled') do  
+              ::I18n.with_locale(::I18n.default_locale) do
+                original_content
+            end
             end
           end +
           content_tag(:div, class: 'col-md-6') do
