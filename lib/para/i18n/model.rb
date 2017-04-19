@@ -25,7 +25,9 @@ module Para
       def write_translated_attribute field, value, locale = ::I18n.locale
         return write_plain_or_store_attribute(field, value) if locale == ::I18n.default_locale
 
-        model_translations[locale.to_s] ||= {}
+        # did not us ||= here to fix first assignation.
+        # Did not investigate on why ||= does not work
+        model_translations[locale.to_s] = {} unless model_translations[locale.to_s]
         model_translations[locale.to_s][field.to_s] = value
       end
 
