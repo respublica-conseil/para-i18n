@@ -18,6 +18,11 @@ module FriendlyId
           association_relation_delegate_class = model_class.relation_delegate_class(::ActiveRecord::AssociationRelation)
           association_relation_delegate_class.send(:include, ClassMethods)
         end
+
+        if ::ActiveRecord.const_defined?('Relation')
+          association_relation_delegate_class = model_class.relation_delegate_class(::ActiveRecord::Relation)
+          association_relation_delegate_class.send(:include, ClassMethods)
+        end
       end
     end
 
