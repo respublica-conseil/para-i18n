@@ -27,6 +27,8 @@ module FriendlyId
     end
 
     def set_friendly_id(text, locale = nil)
+      locale = locale.try(:to_sym)
+
       ::I18n.with_locale(locale || ::I18n.locale) do
         set_slug(normalize_friendly_id(text))
       end
@@ -46,6 +48,8 @@ module FriendlyId
 
     module ClassMethods
       def exists_by_friendly_id?(id, locale = ::I18n.locale)
+        locale = locale.try(:to_sym)
+
         if (exists = by_friendly_id(id, locale).exists?)
           exists
         elsif (fallback_locale = Para::I18n::Fallbacks.i18n_fallback_for(locale)) &&
@@ -58,6 +62,8 @@ module FriendlyId
       private
 
       def first_by_friendly_id(id, locale = ::I18n.locale)
+        locale = locale.try(:to_sym)
+
         if (first = by_friendly_id(id, locale).first)
           first
         elsif (fallback_locale = Para::I18n::Fallbacks.i18n_fallback_for(locale)) &&
@@ -68,11 +74,13 @@ module FriendlyId
       end
 
       def by_friendly_id(id, locale = ::I18n.locale)
+        locale = locale.try(:to_sym)
+
         if locale == ::I18n.default_locale
-          where(friendly_id_config.query_field => id)
+          where(table_name => { friendly_id_config.query_field => id })
         else
           json_path = "{#{ locale },#{ friendly_id_config.query_field }}"
-          where("_translations#>>'#{ json_path }' = ?", id)
+          where("#{ table_name }._translations#>>'#{ json_path }' = ?", id)
         end
       end
     end
