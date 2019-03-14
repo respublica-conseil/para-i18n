@@ -3,3 +3,4 @@ fr:
     i18n:
       translate: "Traduire"
       translation: "Traduction"
+      choose_locale: "Traduire en :"
