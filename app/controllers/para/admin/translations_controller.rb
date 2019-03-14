@@ -39,10 +39,6 @@ module Para
         @target_locale = params[:target_locale] || @locales.first
       end
 
-      def resource_params
-        params.require(:resource).permit!
-      end
-
       def add_breadcrumbs
         add_breadcrumb(resource_title_for(resource), @component.relation_path(resource, action: :show)) if resource
         add_breadcrumb(t('para.i18n.translation'))
