@@ -1,12 +1,10 @@
-require 'para/i18n/translations_helper'
-
 module Para
   module I18n
     class FormGenerator < Para::Generators::NamedBase
       include Para::Admin::BaseHelper
       include Para::Generators::FieldHelpers
       include Para::ModelHelper
-      include Para::I18n::TranslationsHelper
+      include Para::I18n::Helpers::TranslationsHelper
 
       source_root File.expand_path("../templates", __FILE__)
 
@@ -24,7 +22,7 @@ module Para
       end
 
       def model
-        @model ||= Para.const_get(class_name)
+        @model ||= class_name.constantize
       end
     end
   end
