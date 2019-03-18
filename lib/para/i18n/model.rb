@@ -5,6 +5,7 @@ module Para
 
       included do
         class_attribute :translated_attribute_names
+        class_attribute :translatable
       end
 
       def read_translated_attribute(field, locale = ::I18n.locale)
@@ -82,6 +83,7 @@ module Para
       module ClassMethods
         def translates(*fields)
           self.translated_attribute_names = fields.map(&:to_sym)
+          self.translatable = true
 
           fields.each do |field|
             define_method field do
@@ -95,7 +97,7 @@ module Para
         end
 
         def translates?
-          translated_attribute_names && translated_attribute_names.length > 0
+          translatable
         end
       end
     end

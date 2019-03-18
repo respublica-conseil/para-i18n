@@ -28,7 +28,7 @@ module Para
         options.merge!(
           singleton: true,
           through: :component
-        ) unless params.key?(:resource_id)
+        ) unless params.key?(:resource_id)  
 
         loader = self.class.cancan_resource_class.new(self, :resource, options)
         loader.load_and_authorize_resource
