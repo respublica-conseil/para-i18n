@@ -6,6 +6,7 @@ require 'para/i18n/fallbacks'
 
 require 'para/i18n/model'
 require 'para/i18n/resources_table'
+require 'para/i18n/resources_buttons'
 
 require 'para/i18n/friendly_id'
 

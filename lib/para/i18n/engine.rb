@@ -27,6 +27,7 @@ module Para
       initializer 'para.i18n.extend_para_resources_table' do
         ActiveSupport.on_load(:action_view) do
           ::Para::Markup::ResourcesTable.send(:include, Para::I18n::ResourcesTable)
+          ::Para::Markup::ResourcesButtons.send(:include, Para::I18n::ResourcesButtons)
         end
       end
 
