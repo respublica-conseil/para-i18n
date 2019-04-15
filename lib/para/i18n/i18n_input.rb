@@ -35,7 +35,7 @@ module Para
 
       def original_content
         value = template.value_for(object, attribute_name)
-        value = value.html_safe if original_options[:html_safe]
+        value = value.html_safe if original_options[:html_safe] && value
         value
       end
 
