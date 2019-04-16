@@ -5,7 +5,7 @@ module Para
         return unless resource.class.translates?
 
         path = component.relation_path(resource, :translation, action: :edit)
-        options = { class: 'btn btn-info' }
+        options = { class: 'btn btn-default' }
 
         view.link_to(path, options) do
           content_tag(:i, '', class: 'fa fa-globe')
