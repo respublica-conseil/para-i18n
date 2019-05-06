@@ -43,7 +43,10 @@ module Para
       end
 
       def translation_for(locale)
-        model_translations[locale.to_s] || {}
+        case locale
+        when I18n.default_locale then default_locale_translations
+        else model_translations[locale.to_s] || {}
+        end.with_indifferent_access
       end
 
       private
@@ -78,6 +81,12 @@ module Para
         end
 
         store.first if store
+      end
+
+      def default_locale_translations
+        translated_attribute_names.each_with_object({}) do |attribute_name, hash|
+          hash[attribute_name] = read_plain_or_store_attribute(attribute_name)
+        end
       end
 
       module ClassMethods
