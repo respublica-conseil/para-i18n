@@ -4,3 +4,4 @@ fr:
       translate: "Traduire"
       translation: "Traduction"
       choose_locale: "Traduire en :"
+      disabled_for_locale: "Masquer pour la langue en cours"

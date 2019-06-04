@@ -6,7 +6,7 @@ module Para
 
         if (fallbacks = ::I18n.fallbacks[locale]) && fallbacks.length > 1
           fallbacks[1]
-        else
+        elsif locale != ::I18n.default_locale
           ::I18n.default_locale
         end
       end

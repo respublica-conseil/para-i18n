@@ -9,7 +9,7 @@ module Para
       end
 
       def read_translated_attribute(field, locale = ::I18n.locale)
-        return read_plain_or_store_attribute(field) if locale == ::I18n.default_locale
+        return read_plain_or_store_attribute(field) if locale == ::I18n.default_locale && field != :_disabled_for_locale
 
         if model_translations[locale.to_s]
           if (translation = model_translations[locale.to_s][field.to_s])
@@ -24,7 +24,7 @@ module Para
       end
 
       def write_translated_attribute field, value, locale = ::I18n.locale
-        return write_plain_or_store_attribute(field, value) if locale == ::I18n.default_locale
+        return write_plain_or_store_attribute(field, value) if locale == ::I18n.default_locale && field != :_disabled_for_locale
 
         # did not us ||= here to fix first assignation.
         # Did not investigate on why ||= does not work
@@ -47,6 +47,10 @@ module Para
         when I18n.default_locale then default_locale_translations
         else model_translations[locale.to_s] || {}
         end.with_indifferent_access
+      end
+
+      def disabled_for_locale?
+        self.class.translates? && _disabled_for_locale
       end
 
       private
@@ -102,6 +106,14 @@ module Para
             define_method :"#{ field }=" do |value|
               write_translated_attribute(field, value)
             end
+          end
+
+          define_method(:_disabled_for_locale) do
+            read_translated_attribute(:_disabled_for_locale) == "1"
+          end
+
+          define_method(:_disabled_for_locale=) do |value|
+            write_translated_attribute(:_disabled_for_locale, value)
           end
         end
 
