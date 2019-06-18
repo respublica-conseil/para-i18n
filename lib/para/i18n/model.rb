@@ -35,7 +35,7 @@ module Para
       def model_translations
         unless respond_to?(:_translations)
           raise "The model #{ self.class.name } is not translatable. " +
-                "Please run `rails g i18n_admin:translate #{ self.model_name.element }` " +
+                "Please run `rails g para:i18n:translate #{ self.model_name.element }` " +
                 "generator to create the model's migration."
         end
 
