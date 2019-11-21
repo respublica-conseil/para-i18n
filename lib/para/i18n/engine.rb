@@ -11,7 +11,7 @@ module Para
         ::Para.config.routes.extend_routes_for(:component) do
           resource :translation, only: [:edit, :update], controller: '/para/admin/translations'
         end
-        
+
         ::Para.config.routes.extend_routes_for(:crud_component) do
           resource :translation, only: [:edit, :update], controller: '/para/admin/translations'
         end
@@ -41,7 +41,7 @@ module Para
             icon: 'globe',
             label: ::I18n.t('para.i18n.translate'),
             url: @component.relation_path(resource, :translation, action: :edit)
-          } if resource.class.translates?
+          } if resource.class.translates? && can?(:translate, resource)
         end
       end
     end

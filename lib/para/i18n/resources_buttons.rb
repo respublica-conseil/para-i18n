@@ -2,7 +2,7 @@ module Para
   module I18n
     module ResourcesButtons
       def translate_button(resource)
-        return unless resource.class.translates?
+        return unless resource.class.translates? && view.can?(:translate, resource)
 
         path = component.relation_path(resource, :translation, action: :edit)
         options = { class: 'btn btn-default' }
