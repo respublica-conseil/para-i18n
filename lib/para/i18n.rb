@@ -8,6 +8,11 @@ require 'para/i18n/model'
 require 'para/i18n/resources_table'
 require 'para/i18n/resources_buttons'
 
+require 'para/i18n/attribute_translation'
+require 'para/i18n/attribute_translation/base'
+require 'para/i18n/attribute_translation/simple_attribute'
+require 'para/i18n/attribute_translation/attachment'
+
 require 'para/i18n/friendly_id'
 
 require 'para/i18n/i18n_input'

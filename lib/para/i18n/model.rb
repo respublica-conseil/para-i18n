@@ -9,27 +9,11 @@ module Para
       end
 
       def read_translated_attribute(field, locale = ::I18n.locale)
-        return read_plain_or_store_attribute(field) if locale == ::I18n.default_locale && field != :_disabled_for_locale
-
-        if model_translations[locale.to_s]
-          if (translation = model_translations[locale.to_s][field.to_s])
-            return translation
-          end
-        end
-
-        # If no translation was returned, try to fallback to the next locale
-        if (fallback_locale = Fallbacks.i18n_fallback_for(locale))
-          read_translated_attribute(field, fallback_locale)
-        end
+        Para::I18n::AttributeTranslation.read(locale, self, field)
       end
 
-      def write_translated_attribute field, value, locale = ::I18n.locale
-        return write_plain_or_store_attribute(field, value) if locale == ::I18n.default_locale && field != :_disabled_for_locale
-
-        # did not us ||= here to fix first assignation.
-        # Did not investigate on why ||= does not work
-        model_translations[locale.to_s] = {} unless model_translations[locale.to_s]
-        model_translations[locale.to_s][field.to_s] = value
+      def write_translated_attribute(field, value, locale = ::I18n.locale)
+        Para::I18n::AttributeTranslation.write(locale, self, field, value)
       end
 
       def model_translations
@@ -43,7 +27,7 @@ module Para
       end
 
       def translation_for(locale)
-        case locale
+        case locale.to_sym
         when I18n.default_locale then default_locale_translations
         else model_translations[locale.to_s] || {}
         end.with_indifferent_access
@@ -53,8 +37,10 @@ module Para
         self.class.translates? && _disabled_for_locale
       end
 
-      private
-
+      # This method allows reading an attribute from the ActiveRecord table, whether it's
+      # a plain column of the table, or a field of a store (hash, json etc.) of the table,
+      # accessed through the ActiveRecord.store_accessor interface.
+      #
       def read_plain_or_store_attribute(field)
         if plain_column?(field)
           read_attribute(field)
@@ -74,6 +60,8 @@ module Para
           raise ActiveRecord::UnknownAttributeError.new(self, field)
         end
       end
+
+      private
 
       def plain_column?(field)
         self.class.columns_hash.key?(field.to_s)
@@ -99,13 +87,7 @@ module Para
           self.translatable = true
 
           fields.each do |field|
-            define_method field do
-              read_translated_attribute(field)
-            end
-
-            define_method :"#{ field }=" do |value|
-              write_translated_attribute(field, value)
-            end
+            prepare_attribute_translation(field)
           end
 
           define_method(:_disabled_for_locale) do
@@ -119,6 +101,22 @@ module Para
 
         def translates?
           translatable
+        end
+
+        private
+
+        def prepare_attribute_translation(attribute)
+          # Let the Para::I18n::AttributeTranslation::Attachment module handle
+          # ActiveStorage attachment fields translation preparation.
+          Para::I18n::AttributeTranslation::Attachment.prepare(self, attribute)
+
+          define_method(attribute) do
+            read_translated_attribute(attribute)
+          end
+
+          define_method(:"#{attribute}=") do |value|
+            write_translated_attribute(attribute, value)
+          end
         end
       end
     end
