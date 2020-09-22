@@ -10,6 +10,15 @@ module FriendlyId
       def included(model_class)
         model_class.extend(ClassMethods)
 
+        # Support for I18n finder methods on ActiveRecord::Relation of the including
+        # model. Example :
+        model_class.instance_eval do
+          relation.class.send(:include, ClassMethods)
+          if (ActiveRecord::VERSION::MAJOR == 4 && ActiveRecord::VERSION::MINOR == 2) || ActiveRecord::VERSION::MAJOR == 5
+            model_class.send(:extend, ClassMethods)
+          end
+        end
+
         # Support for friendly finds on associations for Rails 4.0.1 and above.
         #
         # Borrowed from FriendlyId::Finders module
