@@ -14,7 +14,7 @@ module FriendlyId
         # model. Example :
         model_class.instance_eval do
           relation.class.send(:include, ClassMethods)
-          if (ActiveRecord::VERSION::MAJOR == 4 && ActiveRecord::VERSION::MINOR == 2) || ActiveRecord::VERSION::MAJOR == 5
+          if (ActiveRecord::VERSION::MAJOR == 4 && ActiveRecord::VERSION::MINOR == 2) || ActiveRecord::VERSION::MAJOR >= 5
             model_class.send(:extend, ClassMethods)
           end
         end
