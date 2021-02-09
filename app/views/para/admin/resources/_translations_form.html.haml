@@ -1,10 +1,14 @@
-= para_form_for(resource, url: @component.relation_path(resource, :translation)) do |form|
+= para_translations_form_for(resource, url: @component.relation_path(resource, :translation), locale: @target_locale) do |form|
   = target_locale_select
 
   = form.fieldset do
-    = I18n.with_locale(@target_locale) { form.input :_disabled_for_locale, as: :boolean, label: t("para.i18n.disabled_for_locale") }
+    - I18n.with_locale(@target_locale) do
+      = form.input :_disabled_for_locale, as: :boolean, label: t("para.i18n.disabled_for_locale")
 
     - translated_model_fields_for(resource.class).each do |field|
-      = form.input field.field_name, as: :i18n, locale: @target_locale
+      = form.input field.field_name, as: :i18n
+
+    - nested_relations_attributes_for(resource.class).each do |field|
+      = form.input field.field_name, as: field.field_type
 
   = form.actions(except: :submit_and_add_another)

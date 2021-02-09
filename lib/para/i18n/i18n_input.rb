@@ -26,11 +26,11 @@ module Para
       private
 
       def locale
-        if (locale = options[:locale])
-          locale
-        else
-          raise 'Missing `:locale` option passed to :i18n input.'
-        end
+        locale = options.fetch(:locale, @builder.target_locale)
+        return locale if locale.present?
+
+        raise 'No target locale for the current i18n input. Please provide a `:locale`' \
+              'option to the :i18n input or the `para_translations_form_for` method'
       end
 
       def original_content

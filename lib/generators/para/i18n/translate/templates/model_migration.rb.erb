@@ -1,4 +1,4 @@
-class Translate<%= table_name.camelize %> < ActiveRecord::Migration
+class Translate<%= table_name.camelize %> < ActiveRecord::Migration<%= "[#{Rails.version.to_f}]" if Rails.version.to_i >= 5 %>
   def change
     add_column :<%= table_name %>, :_translations, :jsonb
   end

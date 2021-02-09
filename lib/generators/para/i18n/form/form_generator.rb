@@ -21,6 +21,10 @@ module Para
         translated_model_fields_for(model)
       end
 
+      def nested_relations_attributes
+        nested_relations_attributes_for(model)
+      end
+
       def model
         @model ||= class_name.constantize
       end

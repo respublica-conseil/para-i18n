@@ -13,6 +13,9 @@ require 'para/i18n/attribute_translation/base'
 require 'para/i18n/attribute_translation/simple_attribute'
 require 'para/i18n/attribute_translation/attachment'
 
+require 'para/i18n/form_builder'
+require 'para/i18n/inputs'
+
 require 'para/i18n/friendly_id'
 
 require 'para/i18n/i18n_input'
