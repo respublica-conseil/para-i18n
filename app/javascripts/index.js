@@ -1,0 +1,1 @@
+import "./para/i18n";
