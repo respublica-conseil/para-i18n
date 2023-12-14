@@ -1,5 +1,0 @@
-.block.form-inputs
-  .form-group
-    = label :target_locale, t('para.i18n.choose_locale'), class: 'control-label col-md-3 pull-left'
-    .col-md-9
-      = select_tag :target_locale, options_for_select(locales.map { |locale| [locale, locale] }, target_locale), data: { :'locale-select' => true, selectize: true, multi: false, value: { text: target_locale, value: target_locale }, :'locale-select-target-url' => @component.relation_path(resource, :translation, action: :edit, target_locale: '_') }
