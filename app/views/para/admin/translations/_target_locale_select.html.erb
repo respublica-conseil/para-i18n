@@ -5,12 +5,11 @@
     <div class="col-md-9">
       <%= select_tag :target_locale, 
                      options_for_select(
-                      locales.map { |locale| 
-                        [locale, translations_form_locale_path_for(resource, locale)] 
-                      }, translations_form_locale_path_for(resource, target_locale)), 
+                      locales.map { |locale| [locale, locale] }, target_locale), 
                      data: { 
                         controller: "translations-locale-select",
                         action: "change->translations-locale-select#switchLocale",
+                        "translations-locale-select-path-template-value": translations_form_locale_path_for(resource, "__locale__"),
                       }
       %>
     </div>

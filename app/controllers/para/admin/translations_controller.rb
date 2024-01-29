@@ -22,6 +22,13 @@ module Para
 
       private
 
+      def after_form_submit_path
+        path = super
+        return path unless params[:_save_and_edit]
+
+        path.merge(target_locale: @target_locale)
+      end
+
       def load_and_authorize_crud_resource
         options = { class: resource_model }
 

@@ -2,6 +2,8 @@ import { Controller } from "@hotwired/stimulus";
 import TomSelect from "tom-select";
 
 export default class extends Controller {
+  static values = { pathTemplate: String };
+
   connect() {
     this.localeSelect = new TomSelect(this.element);
   }
@@ -11,8 +13,13 @@ export default class extends Controller {
   }
 
   switchLocale() {
-    const url = this.element.value;
+    const url = this.pathTemplateValue.replace("__locale__", this.element.value);
     
+    
+    console.log("pathTemplateValue", this.pathTemplateValue);
+    console.log("value", this.element.value);
+    console.log("url", url);
+
     Turbo.visit(url);
   }
 }
