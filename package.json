@@ -1,6 +1,6 @@
 {
   "name": "@para/i18n",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Javascript engine for Para's I18n Extension",
   "main": "app/javascripts/para/i18n.js",
   "files": [

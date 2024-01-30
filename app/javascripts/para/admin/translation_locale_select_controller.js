@@ -15,11 +15,6 @@ export default class extends Controller {
   switchLocale() {
     const url = this.pathTemplateValue.replace("__locale__", this.element.value);
     
-    
-    console.log("pathTemplateValue", this.pathTemplateValue);
-    console.log("value", this.element.value);
-    console.log("url", url);
-
     Turbo.visit(url);
   }
 }
