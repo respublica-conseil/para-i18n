@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../app/javascripts/para/admin/translation.js"],
+  "sourcesContent": ["var TranslationLocaleSelect;\n\nTranslationLocaleSelect = class TranslationLocaleSelect {\n  static onChange($field) {\n    var targetLocale, targetURL;\n    targetURL = $field.data('locale-select-target-url');\n    targetLocale = $field.val();\n    targetURL = targetURL.replace('target_locale=_', ['target_locale', targetLocale].join('='));\n    return Turbolinks.visit(targetURL.replace(':locale', targetLocale));\n  }\n\n};\n\n$(document).on('turbo:load turbo:frame-load', function() {\n  return $('body').on('change', '[data-locale-select]', function(e) {\n    return TranslationLocaleSelect.onChange($(e.currentTarget));\n  });\n});\n"],
+  "mappings": ";;AAAA,MAAI;AAEJ,4BAA0B,MAAMA,yBAAwB;AAAA,IACtD,OAAO,SAAS,QAAQ;AACtB,UAAI,cAAc;AAClB,kBAAY,OAAO,KAAK,0BAA0B;AAClD,qBAAe,OAAO,IAAI;AAC1B,kBAAY,UAAU,QAAQ,mBAAmB,CAAC,iBAAiB,YAAY,EAAE,KAAK,GAAG,CAAC;AAC1F,aAAO,WAAW,MAAM,UAAU,QAAQ,WAAW,YAAY,CAAC;AAAA,IACpE;AAAA,EAEF;AAEA,IAAE,QAAQ,EAAE,GAAG,+BAA+B,WAAW;AACvD,WAAO,EAAE,MAAM,EAAE,GAAG,UAAU,wBAAwB,SAAS,GAAG;AAChE,aAAO,wBAAwB,SAAS,EAAE,EAAE,aAAa,CAAC;AAAA,IAC5D,CAAC;AAAA,EACH,CAAC;",
+  "names": ["TranslationLocaleSelect"]
+}

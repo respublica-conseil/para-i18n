@@ -1,0 +1,27 @@
+{
+  "name": "@para/i18n",
+  "version": "1.0.0",
+  "description": "Javascript engine for Para's I18n Extension",
+  "main": "app/javascripts/para/i18n.js",
+  "files": [
+    "app/javascripts/para"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/respublica-conseil/simple_form_extension.git"
+  },
+  "author": "Valentin Ballestrino",
+  "license": "MIT",
+  "homepage": "https://github.com/respublica-conseil/simple_form_extension",
+  "dependencies": {
+    "tom-select": "^2.2.2"
+  },
+  "peerDependencies": {
+    "jquery": "^3.6.0",
+    "@hotwired/stimulus": "^3.2.2",
+    "@para/para": "^1.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.19.8"
+  }
+}

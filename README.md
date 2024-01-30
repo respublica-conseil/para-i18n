@@ -24,7 +24,7 @@ Or install it yourself as:
 
     $ gem install para-i18n
 
-Add the para-i18n javascript file to your app's admin manifest at `app/assets/javascripts/admin/app.(js|coffee)` :
+Add the para-i18n javascript file to your app's admin manifest at `app/assets/javascripts/admin/app.js` :
 
 ```javascript
 //= require para/i18n
