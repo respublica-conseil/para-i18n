@@ -6,6 +6,29 @@ module Para
       included do
         class_attribute :translated_attribute_names
         class_attribute :translatable
+
+        # Fetch all records of the current model that are not disabled for the provided
+        # locale, which also includes models that are not translatable and records of 
+        # translatable models that are not translated for the current locale.
+        #
+        scope :enabled_for_locale, ->(locale = I18n.locale) {
+          # Models that are not translatable don't have the `_translations` column, so we
+          # avoid any query for them.
+          next all unless translates?
+
+          with_disabled_for_locale_state(disabled: false, locale: locale)
+        }
+
+        # Fetch all records of the current model that are explicitly disabled for the 
+        # provided locale.
+        #
+        scope :disabled_for_locale, ->(locale = I18n.locale) {
+          # Models that are not translatable don't have the `_translations` column, so we
+          # avoid any query for them.
+          next none unless translates?
+
+          with_disabled_for_locale_state(disabled: true, locale: locale)
+        }
       end
 
       def read_translated_attribute(field, locale = ::I18n.locale)
@@ -101,6 +124,18 @@ module Para
 
         def translates?
           translatable
+        end
+
+        # This methods is used by both the enabled_for_locale and disabled_for_locale 
+        # scopes to filter the records based on the _disabled_for_locale attribute stored
+        # in the translations JSONB column for the provided locale.
+        def with_disabled_for_locale_state(disabled:, locale: I18n.locale)
+          predicate = disabled ? 'IN' : 'NOT IN'
+
+          where(<<-SQL.squish, locale, %w[1 t true])
+            COALESCE(#{table_name}._translations->?->>'_disabled_for_locale', '0')
+            #{predicate} (?)
+          SQL
         end
 
         private

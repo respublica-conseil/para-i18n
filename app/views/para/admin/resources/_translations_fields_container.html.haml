@@ -1,0 +1,9 @@
+- if form.object.class.translates? && form.options["locale"]
+  -# Process the label value here while we're in the locale of the UI, and not in the 
+  -# target translation locale
+  - label = t("para.i18n.disabled_for_locale")
+  
+  - I18n.with_locale(form.options["locale"]) do
+    = form.input :_disabled_for_locale, as: :boolean, label: 
+
+= render partial: find_partial_for(form.object.class, "translations_fields"), locals: local_assigns

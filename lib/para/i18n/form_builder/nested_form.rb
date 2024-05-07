@@ -38,7 +38,7 @@ module Para
         # a different nested fields partial when the builder is a translations form
         #
         def nested_fields_partial_name
-          translations_form? ? :translations_fields : :fields
+          translations_form? ? :translations_fields_container : :fields
         end
       end
     end

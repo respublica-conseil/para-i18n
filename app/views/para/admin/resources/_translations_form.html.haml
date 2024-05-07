@@ -2,9 +2,6 @@
   = target_locale_select
 
   = form.fieldset do
-    - I18n.with_locale(@target_locale) do
-      = form.input :_disabled_for_locale, as: :boolean, label: t("para.i18n.disabled_for_locale")
-
     - translated_model_fields_for(resource.class).each do |field|
       = form.input field.field_name, as: :i18n
 

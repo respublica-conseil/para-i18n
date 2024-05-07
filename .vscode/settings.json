@@ -1,0 +1,5 @@
+{
+  "circleci.persistedProjectSelection": [
+    "gh/para-cms/para-i18n"
+  ]
+}
