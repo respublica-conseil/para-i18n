@@ -76,7 +76,7 @@ module FriendlyId
           where(friendly_id_config.query_field => id)
         else
           json_path = "{#{ locale },#{ friendly_id_config.query_field }}"
-          where("_translations#>>'#{ json_path }' = ?", id)
+          where("#{table_name}._translations#>>'#{ json_path }' = ?", id)
         end
       end
     end
